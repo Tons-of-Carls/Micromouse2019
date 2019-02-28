@@ -55,7 +55,7 @@ void loop() {
   }
 
   // IR is unreliable right now, so 900 is a good threshhold as it varies 920-980 at start
-  if(leftEncoder.read() > 14320 || (currIR < 900 && time-millis() > 11000)){
+  if(leftEncoder.read() > 1432 || (currIR < 900 && time-millis() > 11000)){
     stop = true;
     Serial.println("stop condition reached");
   }
