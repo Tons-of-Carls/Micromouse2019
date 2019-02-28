@@ -1,6 +1,5 @@
 #include "Macros.h"
 
-
 #define MotorTest
 //ControllerTest
 //AccelerometerTest
@@ -22,6 +21,10 @@ const int d = 10;
 int ir1 = 0;
 int ir2 = 0;
 
+unsigned int prevIR = 0;
+unsigned int currIR = 0;
+
+unsigned long time;
 
 Encoder leftEncoder(6,7);
 Motor motor1(16,17,15);
@@ -31,6 +34,7 @@ bool stop = false;
 void setup() {
   pinMode(ledPin, OUTPUT);
   //pinMode(ledPin1, OUTPUT);
+  time = millis();
 }
 
 void loop() {
@@ -41,12 +45,18 @@ void loop() {
   Serial.print("Left Encoder: ");
   Serial.println(leftEncoder.read());
 
-  Serial.print("IR Value: ");
-  Serial.println(analogRead(21));
+  currIR = analogRead(21);
+  if (currIR != prevIR) 
+  {
+    Serial.print("IR Value: ");
+    Serial.println(currIR);
+    prevIR = currIR;
+  }
 
-  
-  if(leftEncoder.read() > 7160 || analogRead(21) < 300){
+  // IR is unreliable right now, so 900 is a good threshhold as it varies 920-980 at start
+  if(leftEncoder.read() > 14320 || (currIR < 900 && time-millis() > 11000)){
     stop = true;
+    Serial.println("stop condition reached");
   }
 
   if(!stop){
