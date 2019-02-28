@@ -26,9 +26,9 @@ unsigned int currIR = 0;
 
 unsigned long time;
 //ENC1A, ENC1B
-Encoder leftEncoder(6,7);
+Encoder leftEncoder(16,17);
 // M1R M1F M1E
-Motor motor1(16,17,15);
+Motor motor1(8,7,4);
 
 bool stop = false;
 
