@@ -29,6 +29,7 @@ unsigned long time;
 Encoder leftEncoder(16,17);
 // M1R M1F M1E
 Motor motor1(8,7,4);
+Motor motor2(12,11,5);
 
 bool stop = false;
 
@@ -55,16 +56,18 @@ void loop() {
   }
 
   // IR is unreliable right now, so 900 is a good threshhold as it varies 920-980 at start
-  if(leftEncoder.read() > 1432 || (currIR < 900 && time-millis() > 11000)){
+  if(leftEncoder.read() > 1432 || (currIR < 800 && time-millis() > 11000)){
     stop = true;
     Serial.println("stop condition reached");
   }
 
   if(!stop){
     motor1.update(1);
+    motor2.update(1);
   }
   else{
     motor1.update(0);
+    motor2.update(0);
   }
   
   delay(PROGRAM_DELAY_MS);
