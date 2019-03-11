@@ -14,60 +14,128 @@
 #include "Motor.cpp"
 #include <Encoder.h>
 
-const int ledPin = 0;
-const int ledPin1 = 1;
-const int d = 10;
+//for our future reference
+//IR sensors...
+//T1~4 is from left to right of mouse (clockwise)
+//T1-21 LeftLeft
+//T2-20 FrontLeft
+//T3-19 FrontRight
+//T4-18 RightRight
 
-int ir1 = 0;
-int ir2 = 0;
+const int irPinLL = 21;
+const int irPinFL = 20;
+const int irPinFR = 19;
+const int irPinRR = 18;
+
+//LEDs...
+//L1 is outer, L2 is inner
+//L1-0
+//L2-1
+
+const int ledPin1 = 0;
+const int ledPin2 = 1;
+
+//Encoders...
+//ENC1 is left, ENC2 is right
+//ENC1A-16
+//ENC1B-17
+//ENC2A-2
+//ENC2B-15
+
+//format
+//ENC1A, ENC1B
+Encoder leftEncoder(16,17);
+Encoder rightEncoder(2,15);
+
+//Motors...
+//1 is left, 2 is right
+//M1R-8
+//M1F-7
+//M1E-4
+//M2R-12
+//M2F-11
+//M2E-5
+
+//format
+// M1R M1F M1E
+Motor motor1(8,7,4);
+//Motor motor2(12,11,5);
+//builtinLED - 11
+
+
+//Switches...
+//1 is back, 2 is front
+//S1-13
+//S2-14
+//
+//Buzzer...
+//BZ-3
+//
+//Unused pins...
+//6
+//9
+//10
+//13
+//14
+
+
+
+const int d = 10; //unknown
+
+int ir1 = 0; //unknown
+int ir2 = 0; //unknown
 
 unsigned int prevIR = 0;
 unsigned int currIR = 0;
 
 unsigned long time;
-//ENC1A, ENC1B
-Encoder leftEncoder(16,17);
-// M1R M1F M1E
-Motor motor1(8,7,4);
-Motor motor2(12,11,5);
+
+
 
 bool stop = false;
 
 void setup() {
-  pinMode(ledPin, OUTPUT);
-  //pinMode(ledPin1, OUTPUT);
+  pinMode(ledPin1, OUTPUT);
+  pinMode(ledPin2, OUTPUT);
   time = millis();
+  Serial.begin(38400);
 }
 
 void loop() {
-  digitalWrite(ledPin, HIGH);
+  digitalWrite(ledPin1, HIGH);
+  digitalWrite(ledPin2, HIGH);
   
   Serial.println("Running Motor...");
   
   Serial.print("Left Encoder: ");
   Serial.println(leftEncoder.read());
 
-  currIR = analogRead(21);
+/*   currIR = analogRead(irPinFL);
   if (currIR != prevIR) 
   {
     Serial.print("IR Value: ");
     Serial.println(currIR);
     prevIR = currIR;
-  }
+  } */
 
   // IR is unreliable right now, so 900 is a good threshhold as it varies 920-980 at start
-  if(leftEncoder.read() > 1432 || (currIR < 800 && time-millis() > 11000)){
+  if(leftEncoder.read() > 1432){
     stop = true;
-    Serial.println("stop condition reached");
+    Serial.println("stop condition reached by encoder");
   }
+
+//  if (currIR < 800 && time-millis() > 11000){
+//    stop=true;
+//    Serial.println("stop condition reached by ir");
+//  }
 
   if(!stop){
     motor1.update(1);
-    motor2.update(1);
+//    motor2.update(1);
   }
   else{
     motor1.update(0);
-    motor2.update(0);
+//    motor2.update(0);
   }
   
   delay(PROGRAM_DELAY_MS);
