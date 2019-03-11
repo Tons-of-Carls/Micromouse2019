@@ -90,9 +90,16 @@ unsigned int currIR = 0;
 
 unsigned long time;
 
+union eepromData 
+{
+    uint16_t readout;
+    uint8_t backPart;
+}
+unsigned int address = 0;
 
 
 bool stop = false;
+
 
 void setup() {
   pinMode(ledPin1, OUTPUT);
@@ -118,6 +125,11 @@ void loop() {
     Serial.print(leftEncoder.read());
     Serial.print(" ");
     Serial.println(newPosition);
+    eepromData.readout = newPosition;
+    EEPROM.update(address, eepromData.backPart);
+    address = address + 1;
+    if(address == EEPROM.length())
+      address = 0;
   }
 
 
