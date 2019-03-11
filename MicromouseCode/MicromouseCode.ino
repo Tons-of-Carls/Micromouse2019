@@ -97,6 +97,7 @@ bool stop = false;
 void setup() {
   pinMode(ledPin1, OUTPUT);
   pinMode(ledPin2, OUTPUT);
+//  pinMode(12, OUTPUT); //because LED PIN
   time = millis();
   Serial.begin(9600);
 }
@@ -104,6 +105,7 @@ void setup() {
 void loop() {
   digitalWrite(ledPin1, HIGH);
   digitalWrite(ledPin2, HIGH);
+//  digitalWrite(12, LOW);
   
 //  Serial.println("Running Motor...");
   
@@ -112,7 +114,9 @@ void loop() {
   long newPosition = rightEncoder.read();
   if (newPosition != oldPosition) {
     oldPosition = newPosition;
-    Serial.print("Left Encoder: ");
+    Serial.print("Encoders: ");
+    Serial.print(leftEncoder.read());
+    Serial.print(" ");
     Serial.println(newPosition);
   }
 
@@ -126,10 +130,10 @@ void loop() {
   } */
 
   // IR is unreliable right now, so 900 is a good threshhold as it varies 920-980 at start
-//  if(leftEncoder.read() > 1400){
-//    stop = true;
-//    Serial.println("stop condition reached by encoder");
-//  }
+  if(leftEncoder.read() > 1400){
+    stop = true;
+    Serial.println("stop condition reached by encoder");
+  }
 
 //  if (currIR < 800 && time-millis() > 11000){
 //    stop=true;
