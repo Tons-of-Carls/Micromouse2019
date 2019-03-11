@@ -50,17 +50,17 @@ public:
     if(speed > 0){
       digitalWrite(_polarity1,HIGH);
       digitalWrite(_polarity2,LOW);
-      Serial.println("Forward");
+//      Serial.println("Forward");
     }
     else if(speed < 0){
       digitalWrite(_polarity1,LOW);
       digitalWrite(_polarity2,HIGH);
-      Serial.println("Backwards");
+//      Serial.println("Backwards");
     }
     else{
       digitalWrite(_polarity1,LOW);
       digitalWrite(_polarity2,LOW);
-      Serial.println("Stop");
+//      Serial.println("Stop");
     }
     
 //    analogWrite(_pwm,abs(_speed));
