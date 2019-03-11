@@ -25,14 +25,14 @@ public:
   }
 
   void update(float speed){
-    /*if(speed > 1){
+    if(speed > 1){
       speed = 1;
     }
     else if(speed < -1){
       speed = -1;
     }
 
-    int diff = _speed - (int)(speed * 255);
+    /*int diff = _speed - (int)(speed * 255);
 
     // Handle gradient
     if(diff != 0){
@@ -45,14 +45,14 @@ public:
     }
 
     Serial.print("Speed: ");
-    Serial.println(_speed);
+    Serial.println(_speed);*/
 
-    if(_speed > 0){
+    if(speed > 0){
       digitalWrite(_polarity1,HIGH);
       digitalWrite(_polarity2,LOW);
       Serial.println("Forward");
     }
-    else if(_speed < 0){
+    else if(speed < 0){
       digitalWrite(_polarity1,LOW);
       digitalWrite(_polarity2,HIGH);
       Serial.println("Backwards");
@@ -63,10 +63,10 @@ public:
       Serial.println("Stop");
     }
     
-    analogWrite(_pwm,abs(_speed));*/
+//    analogWrite(_pwm,abs(_speed));
 
-    digitalWrite(_polarity1,LOW);
-    digitalWrite(_polarity2,HIGH);
+//    digitalWrite(_polarity1,LOW);
+//    digitalWrite(_polarity2,HIGH);
     analogWrite(_pwm,abs((int)(speed * 255)));
     
   }

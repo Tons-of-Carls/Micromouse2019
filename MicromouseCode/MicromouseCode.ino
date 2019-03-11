@@ -58,8 +58,8 @@ Encoder rightEncoder(2,15);
 
 //format
 // M1R M1F M1E
-Motor motor1(8,7,4);
-//Motor motor2(12,11,5);
+Motor motorL(8,7,4);
+Motor motorR(12,11,5);
 //builtinLED - 11
 
 
@@ -98,17 +98,24 @@ void setup() {
   pinMode(ledPin1, OUTPUT);
   pinMode(ledPin2, OUTPUT);
   time = millis();
-  Serial.begin(38400);
+  Serial.begin(9600);
 }
 
 void loop() {
   digitalWrite(ledPin1, HIGH);
   digitalWrite(ledPin2, HIGH);
   
-  Serial.println("Running Motor...");
+//  Serial.println("Running Motor...");
   
-  Serial.print("Left Encoder: ");
-  Serial.println(leftEncoder.read());
+ 
+  long oldPosition  = -999;
+  long newPosition = rightEncoder.read();
+  if (newPosition != oldPosition) {
+    oldPosition = newPosition;
+    Serial.print("Left Encoder: ");
+    Serial.println(newPosition);
+  }
+
 
 /*   currIR = analogRead(irPinFL);
   if (currIR != prevIR) 
@@ -119,23 +126,23 @@ void loop() {
   } */
 
   // IR is unreliable right now, so 900 is a good threshhold as it varies 920-980 at start
-  if(leftEncoder.read() > 1432){
-    stop = true;
-    Serial.println("stop condition reached by encoder");
-  }
+//  if(leftEncoder.read() > 1400){
+//    stop = true;
+//    Serial.println("stop condition reached by encoder");
+//  }
 
 //  if (currIR < 800 && time-millis() > 11000){
 //    stop=true;
 //    Serial.println("stop condition reached by ir");
 //  }
 
-  if(!stop){
-    motor1.update(1);
-//    motor2.update(1);
+  if(stop){
+    motorL.update(0);
+    motorR.update(0);
   }
   else{
-    motor1.update(0);
-//    motor2.update(0);
+    motorL.update(1);
+    motorR.update(-1);
   }
   
   delay(PROGRAM_DELAY_MS);
