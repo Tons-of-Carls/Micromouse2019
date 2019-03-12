@@ -145,8 +145,8 @@ void loop() {
     motorR.update(0);
   }
   else{
-    motorL.update(1);
-    motorR.update(-1);
+    motorL.update(-1);
+    motorR.update(1);
   }
   
   delay(PROGRAM_DELAY_MS);
