@@ -3,6 +3,7 @@
 #include <Encoder.h>
 #include "PID.cpp"
 #include "Motor.cpp"
+#include "Arduino.h"
 
 class Controller{
 private:
@@ -28,9 +29,14 @@ public:
   // motor gear ration: 29.86:1
   // motor output: 29.86 * 12 = 358.32 ticks / revolution of wheel
   // 734.59 ticks / 18 cm (1 square)
-  void update(int setPoint = 0){
-    dcMotor.update(pidController.correction(setPoint - (encoder.read() - _oldSensorValue)/PROGRAM_DELAY_SEC));
+  bool update(int setPoint = 0){
+    //dcMotor.update(pidController.correction(setPoint - (encoder.read() - _oldSensorValue)/PROGRAM_DELAY_SEC));
+    dcMotor.update(pidController.correction(setPoint - encoder.read()));
     _oldSensorValue = encoder.read();
+    if(abs(setPoint - encoder.read()) < 20){
+      return true;
+    }
+    return false;
   }
 
   void reset(){

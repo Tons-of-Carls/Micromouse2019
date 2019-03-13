@@ -17,7 +17,7 @@ public:
   }
   
   float correction(int error){
-    float correction = calculateP(error) + caculateI(error);
+    float correction = calculateP(error);// + caculateI(error);
     _prevError = error;
     return correction;
   }

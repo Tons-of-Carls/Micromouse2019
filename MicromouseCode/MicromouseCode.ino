@@ -1,12 +1,112 @@
 #include "Macros.h"
 
-#define MotorTest
+#define BobaTime
 //ControllerTest
 //AccelerometerTest
 //EncoderTest
 //MotorTest
+//BobaTime
 
 /*--------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+#ifdef BobaTime
+
+#include "Controller.cpp"
+
+Controller rightWheel(.01, 0, 2, 15, 12, 11, 5);// float kp, float ki, uint8_t encPin1, uint8_t encPin2, int mPin1, int mPin2, int mpwm
+Controller leftWheel(.01, 0, 16, 17, 8, 7, 4);
+
+int state = 0;
+
+bool rightDone = false;
+bool leftDone = false;
+
+void setup() {
+  Serial.begin(9600);
+  Serial.print("Starting State 0");
+}
+
+// Steps to get boba
+// 1. Move forward 18 cm (734 encoder ticks)
+// 2. Turn left some amount
+// 3. Forward 18 cm (734 encoder ticks)
+// 4. Turn right some amount
+
+void loop() {
+  if(state == 0){
+    if(!rightDone){
+      rightDone = rightWheel.update(734);
+    }
+    if(!leftDone){
+      leftDone = leftWheel.update(-734);
+    }
+
+    if(leftDone && rightDone){
+      rightDone = false;
+      leftDone = false;
+      state++;
+      Serial.println("State 0 Finished");
+      Serial.println();
+      Serial.println("Starting State 1");
+    }
+  }
+
+  if(state == 1){
+    if(!rightDone){
+      rightDone = rightWheel.update(734);
+    }
+    if(!leftDone){
+      leftDone = leftWheel.update(734);
+    }
+
+    if(leftDone && rightDone){
+      rightDone = false;
+      leftDone = false;
+      state++;
+      Serial.println("State 1 Finished");
+      Serial.println();
+      Serial.println("Starting State 2");
+    }
+  }
+
+  if(state == 2){
+    if(!rightDone){
+      rightDone = rightWheel.update(734);
+    }
+    if(!leftDone){
+      leftDone = leftWheel.update(-734);
+    }
+
+    if(leftDone && rightDone){
+      rightDone = false;
+      leftDone = false;
+      state++;
+      Serial.println("State 2 Finished");
+      Serial.println();
+      Serial.println("Starting State 3");
+    }
+  }
+
+  if(state == 3){
+    if(!rightDone){
+      rightDone = rightWheel.update(-734);
+    }
+    if(!leftDone){
+      leftDone = leftWheel.update(-734);
+    }
+
+    if(leftDone && rightDone){
+      rightDone = false;
+      leftDone = false;
+      state++;
+      Serial.println("State 3 Finished");
+    }
+  }
+}
+
+#endif
+
 
 
 #ifdef MotorTest

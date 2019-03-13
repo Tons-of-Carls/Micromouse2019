@@ -1,4 +1,4 @@
-/*#include "Macros.h"
+#include "Macros.h"
 #include "Controller.cpp"
 
 
@@ -13,7 +13,7 @@ private:
   Controller rightMotor;
 
 public:
-  DriveBase():leftMotor(0.1,0.1,1,2,3,4,5), leftMotor(0.1,0.1,6,7,8,9,10){
+  DriveBase():leftMotor(0.1,0.1,1,2,3,4,5), rightMotor(0.1,0.1,6,7,8,9,10){
     
   }
 
@@ -51,9 +51,7 @@ public:
 
 private:
   float arcLength(float radius, int deg = 90){
-    return 2*M_PI*radius*(deg/360.0)
+    return 2*M_PI*radius*(deg/360.0);
   }
 
-  
-
-};*/
+};
