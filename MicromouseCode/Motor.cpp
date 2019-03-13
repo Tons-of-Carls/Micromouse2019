@@ -25,6 +25,11 @@ public:
   }
 
   void update(float speed){
+    if(DEBUG){
+      Serial.print("Input Speed: ");
+      Serial.print(speed);
+    }
+    
     if(speed > 1){
       speed = 1;
     }
@@ -67,6 +72,12 @@ public:
 
 //    digitalWrite(_polarity1,LOW);
 //    digitalWrite(_polarity2,HIGH);
+
+    if(DEBUG){
+      Serial.print("Speed: ");
+      Serial.print(speed);
+    }
+    
     analogWrite(_pwm,abs((int)(speed * 255)));
     
   }

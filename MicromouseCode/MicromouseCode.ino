@@ -46,6 +46,8 @@ void loop() {
       rightDone = false;
       leftDone = false;
       state++;
+      rightWheel.reset();
+      leftWheel.reset();
       Serial.println("State 0 Finished");
       Serial.println();
       Serial.println("Starting State 1");
@@ -64,6 +66,8 @@ void loop() {
       rightDone = false;
       leftDone = false;
       state++;
+      rightWheel.reset();
+      leftWheel.reset();
       Serial.println("State 1 Finished");
       Serial.println();
       Serial.println("Starting State 2");
@@ -82,6 +86,8 @@ void loop() {
       rightDone = false;
       leftDone = false;
       state++;
+      rightWheel.reset();
+      leftWheel.reset();
       Serial.println("State 2 Finished");
       Serial.println();
       Serial.println("Starting State 3");
@@ -100,6 +106,8 @@ void loop() {
       rightDone = false;
       leftDone = false;
       state++;
+      rightWheel.reset();
+      leftWheel.reset();
       Serial.println("State 3 Finished");
     }
   }
