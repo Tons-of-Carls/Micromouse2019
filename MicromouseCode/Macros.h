@@ -12,7 +12,7 @@
 #define WHEEL_CIRCUMFERENCE_CM (8.78)
 
 
-#define SIGN(val){val >= 0 ? 1 : -1}
+//#define SIGN(int val){(val >= 0 ? 1 : -1)}
 
 //Debug
 #define DEBUG (true)

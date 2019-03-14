@@ -44,8 +44,8 @@ public:
   bool update(int setPoint = 0){
     //dcMotor.update(pidController.correction(setPoint - (encoder.read() - _oldSensorValue)/PROGRAM_DELAY_SEC));
 
-    _encVal = _encVal + SIGN(abs(_encVal) - abs(encoder.read()));
-    int error = setPoint - encVal;
+    //_encVal = _encVal + SIGN(abs(_encVal) - abs(encoder.read()));
+    int error = setPoint - _encVal;
     
     
     dcMotor.update(pidController.correction(error));
@@ -60,7 +60,7 @@ public:
       Serial.println(_mp);
       
       Serial.print("Encoder Val: ");
-      Serial.println(encVal);
+      Serial.println(_encVal);
 
       Serial.print("Error: ");
       Serial.println(error);

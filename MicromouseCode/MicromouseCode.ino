@@ -32,17 +32,17 @@ void loop() {
     motorR.update(.9);
     motorL.update(-.9);
   
-    delay(500)
+    delay(500);
   
     motorR.update(.9);
     motorL.update(.9);
   
-    delay(500)
+    delay(500);
 
     motorR.update(.9);
     motorL.update(-.9);
   
-    delay(500)
+    delay(500);
   
     motorR.update(-.9);
     motorL.update(-.9);
