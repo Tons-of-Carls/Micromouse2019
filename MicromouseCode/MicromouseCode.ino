@@ -1,13 +1,59 @@
 #include "Macros.h"
 
-#define BobaTime
+#define IwantBoba
 //ControllerTest
 //AccelerometerTest
 //EncoderTest
 //MotorTest
 //BobaTime
+//IwantBoba
 
 /*--------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+#ifdef IwantBoba
+
+#include "Motor.cpp"
+
+// M1R M1F M1E
+Motor motorL(8,7,4);
+Motor motorR(12,11,5);
+
+bool done = false;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+
+void loop() {
+
+  if(!done){
+    motorR.update(.9);
+    motorL.update(-.9);
+  
+    delay(1)
+  
+    motorR.update(.9);
+    motorL.update(.9);
+  
+    delay(1)
+
+    motorR.update(.9);
+    motorL.update(-.9);
+  
+    delay(1)
+  
+    motorR.update(-.9);
+    motorL.update(-.9);
+  
+    delay(1);
+
+    done = true;
+  }
+}
+
+#endif
 
 
 #ifdef BobaTime
@@ -24,7 +70,13 @@ bool leftDone = false;
 
 void setup() {
   Serial.begin(9600);
-  Serial.print("Starting State 0");
+  Serial.flush()
+  delay(1000)
+  
+  rightWheel.init();
+  leftWheel.init();
+  
+  Serial.println("Starting State 0");
 }
 
 // Steps to get boba
@@ -34,12 +86,15 @@ void setup() {
 // 4. Turn right some amount
 
 void loop() {
+
+  delay(PROGRAM_DELAY_MS);
+  
   if(state == 0){
     if(!rightDone){
-      rightDone = rightWheel.update(734);
+      rightDone = rightWheel.update(700);
     }
     if(!leftDone){
-      leftDone = leftWheel.update(-734);
+      leftDone = leftWheel.update(-700);
     }
 
     if(leftDone && rightDone){
@@ -54,7 +109,7 @@ void loop() {
     }
   }
 
-  if(state == 1){
+  /*if(state == 1){
     if(!rightDone){
       rightDone = rightWheel.update(734);
     }
@@ -110,7 +165,7 @@ void loop() {
       leftWheel.reset();
       Serial.println("State 3 Finished");
     }
-  }
+  }*/
 }
 
 #endif

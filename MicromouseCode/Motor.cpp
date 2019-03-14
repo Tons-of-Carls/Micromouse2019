@@ -55,17 +55,17 @@ public:
     if(speed > 0){
       digitalWrite(_polarity1,HIGH);
       digitalWrite(_polarity2,LOW);
-//      Serial.println("Forward");
+      Serial.println("Forward");
     }
     else if(speed < 0){
       digitalWrite(_polarity1,LOW);
       digitalWrite(_polarity2,HIGH);
-//      Serial.println("Backwards");
+      Serial.println("Backwards");
     }
     else{
       digitalWrite(_polarity1,LOW);
       digitalWrite(_polarity2,LOW);
-//      Serial.println("Stop");
+      Serial.println("Stop");
     }
     
 //    analogWrite(_pwm,abs(_speed));
@@ -73,12 +73,23 @@ public:
 //    digitalWrite(_polarity1,LOW);
 //    digitalWrite(_polarity2,HIGH);
 
+    
+
+    
     if(DEBUG){
-      Serial.print("Speed: ");
+      Serial.print("Speed %: ");
+      Serial.println(speed);
+    }
+
+    speed = abs((int)(speed * 255));
+
+
+    if(DEBUG){
+      Serial.print("Analog Write Val: ");
       Serial.print(speed);
     }
     
-    analogWrite(_pwm,abs((int)(speed * 255)));
+    analogWrite(_pwm,speed);
     
   }
 };
