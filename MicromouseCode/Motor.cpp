@@ -27,7 +27,7 @@ public:
   void update(float speed){
     if(DEBUG){
       Serial.print("Input Speed: ");
-      Serial.print(speed);
+      Serial.println(speed);
     }
     
     if(speed > 1){
